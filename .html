@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordering System</title>
+    <link rel="stylesheet" href="JollibeeDrinkssystem.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+<div class="w3-sidebar w3-bar-block w3-card w3-animate-left" id="mySidebar">
+    <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">Close &times;</button>
+    <a href="jollibeeSignin.html" class="w3-bar-item w3-button">Sign in</a>
+    <a href="jolllibeeInfoAboutUS.html" class="w3-bar-item w3-button">Info/About Us</a>
+    <a href="jollibeeSocialMedia.html" class="w3-bar-item w3-button">Social Medial</a>
+    <a href="Contribution.html" class="w3-bar-item w3-button">Contributions</a>
+    </div>
+      
+      <div id="main">
+        <div class="w3-container">
+          
+        </div>
+      </div>
+      
+      <script>
+      function w3_open() {
+        document.getElementById("main").style.marginLeft = "25%";
+        document.getElementById("mySidebar").style.width = "25%";
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openNav").style.display = 'none';
+      }
+      
+      function w3_close() {
+        document.getElementById("main").style.marginLeft = "0%";
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = 'inline-block';
+      }
+      </script>
+      
+    <ul class="navbar">
+        <!-- Sidebar Button -->
+        <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+        <li>
+            <img src="images.png" alt="Navigation Header" class="nav-image">
+        </li>
+    </ul>
+
+
+  <!-- Bottom Navigation Bar -->
+  <ul class="footer-nav">
+    <li><a class="active" href="Jollibee.html">
+        <img src="462582448_427876420399952_5365525725791670604_n.jpg " height="50" width="50">
+       
+    </a></li>
+  
+    <li><a href="joliPromo.html">
+        <b> <i>
+            Promos
+        </i></b>
+    </a></li>
+    <li><a href="joliOrder.html">
+        <b><i>
+            Order
+        </i></b>
+    </a></li>
+    <li><a href="joliLocation.html">
+        <b>
+            <i>
+                Location
+            </i>
+        </b>
+    </a></li>
+  </ul>
+
+
+
+
+
+
+    <div class="container">
+        <h1>Add To Cart And Order</h1>
+        <div class="balance-section">
+            <p id="balance">Your Balance: $<span>100</span></p>
+            <input type="number" id="add-balance" placeholder="Add Balance">
+            <button onclick="addBalance()">Add Funds</button>
+        </div>
+
+        <div class="menu">
+            <h2>Menu</h2>
+            <div class="menu-item">
+                <span>Ice Mocha ($48)</span>
+                <button onclick="addToCart('Ice Mocha', 48)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Ice Mocha Float ($80)</span>
+                <button onclick="addToCart('Ice Mocha Float', 80)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Hot fresh Brew ($48)</span>
+                <button onclick="addToCart('Hot fresh Brew', 48)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Iced Lotte ($53)</span>
+                <button onclick="addToCart('Iced Lotte', 53)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Iced Tea ($64)</span>
+                <button onclick="addToCart('Iced Tea', 64)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Coke ($53)</span>
+                <button onclick="addToCart('Coke', 53)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Sprite ($53)</span>
+                <button onclick="addToCart('Sprite', 53)">Add to Cart</button>
+            </div>
+            
+            <div class="menu-item">
+                <span>Royal ($53)</span>
+                <button onclick="addToCart('Royal', 53)">Add to Cart</button>
+            </div>
+             <div class="menu-item">
+               <span>Pineapple Juice ($53)</span>
+               <button onclick="addToCart('Pineapple Juice', 53)">Add to Cart</button>
+         </div>
+         <div class="menu-item">
+            <span>Soda Floats ($57)</span>
+            <button onclick="addToCart('Soda Floats', 57)">Add to Cart</button>
+        </div>
+       
+        <div class="menu-item">
+            <span>Hot Chocolate ($29)</span>
+            <button onclick="addToCart('Hot Chocolate', 29)">Add to Cart</button>
+        </div>
+         <div class="menu-item">
+           <span>Minute Maid ($64)</span>
+           <button onclick="addToCart('Minute Maid', 64)">Add to Cart</button>
+     </div>
+
+
+        </div>
+
+        <div class="cart">
+            <h2>Cart</h2>
+            <ul id="cart-items"></ul>
+            <p id="total">Total: $<span>0</span></p>
+            <button onclick="checkout()">Pay</button>
+            <p id="message"></p>
+        </div>
+    </div>
+
+    <script>
+        let balance = 100; // Initial balance
+        let cart = []; // Items in the cart
+        let total = 0; // Total cost of cart
+
+        function addBalance() {
+            const input = document.getElementById("add-balance").value;
+            const amount = parseFloat(input);
+
+            if (isNaN(amount) || amount <= 0) {
+                showMessage("Please enter a valid amount to add.", "red");
+                return;
+            }
+
+            balance += amount;
+            updateBalance();
+            showMessage(`${amount} added to your balance.`, "green");
+            document.getElementById("add-balance").value = ""; // Clear input
+        }
+
+        function addToCart(item, price) {
+            cart.push({ item, price });
+            total += price;
+            updateCart();
+            showMessage(`${item} added to cart.`, "green");
+        }
+
+        function updateBalance() {
+            document.getElementById("balance").querySelector("span").textContent = balance.toFixed(2);
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById("cart-items");
+            cartItems.innerHTML = ""; // Clear existing items
+
+            cart.forEach((cartItem, index) => {
+                const li = document.createElement("li");
+                li.textContent = `${cartItem.item} - $${cartItem.price}`;
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.onclick = () => removeFromCart(index);
+                li.appendChild(removeButton);
+                cartItems.appendChild(li);
+            });
+
+            document.getElementById("total").querySelector("span").textContent = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            total -= cart[index].price;
+            cart.splice(index, 1);
+            updateCart();
+            showMessage("Item removed from cart.", "green");
+        }
+
+        function checkout() {
+            if (total > balance) {
+                showMessage("Insufficient balance. Please add more funds.", "red");
+                return;
+            }
+
+            balance -= total;
+            cart = [];
+            total = 0;
+            updateBalance();
+            updateCart();
+            showMessage("Payment successful! Thank you for your order. Ready to Deliver", "green");
+        }
+
+        function showMessage(message, color) {
+            const msg = document.getElementById("message");
+            msg.textContent = message;
+            msg.style.color = color;
+        }
+    </script>
+</body>
+</html>
